@@ -22,6 +22,8 @@
 
 GitHub в этом уроке объяснялся как место, где проект живет, хранит историю изменений и дает агентам понятную рабочую поверхность.
 
+![Путь урока: от идеи до проекта, версия 1](docs/assets/lesson-path-handout-v1.png)
+
 ![GitHub для новичков: подробная схема](docs/assets/github-for-beginners-detailed.png)
 
 ![GitHub для новичков и зачем он нужен агентам](docs/assets/github-for-beginners-agents.png)
