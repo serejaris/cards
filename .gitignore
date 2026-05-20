@@ -1,0 +1,20 @@
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project
+terminals/
+agent-transcripts/
+mcps/
+.cursor/
+node_modules/
+dist/
+build/
+.env
+*.log
