@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЧГК Cards — Classic Study</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function showScreen(id) {
+      document.querySelectorAll('[data-screen]').forEach(el => el.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+      document.querySelectorAll('[data-nav]').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white');
+        btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+      });
+      const nav = document.querySelector(`[data-nav="${id}"]`);
+      if (nav) {
+        nav.classList.add('bg-indigo-600', 'text-white');
+        nav.classList.remove('text-slate-600', 'hover:bg-slate-100');
+      }
+    }
+    function showCardState(state) {
+      document.getElementById('card-front').classList.toggle('hidden', state !== 'front');
+      document.getElementById('card-back').classList.toggle('hidden', state !== 'back');
+    }
+  </script>
+</head>
+<body class="bg-white text-slate-900 min-h-screen font-sans">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar navigation -->
+    <aside class="w-64 bg-slate-50 border-r border-slate-200 p-6 flex flex-col gap-2 shrink-0">
+      <div class="mb-8 px-2">
+        <h1 class="text-xl font-semibold tracking-tight text-indigo-700">ЧГК Cards</h1>
+        <p class="text-xs uppercase tracking-widest text-slate-400 mt-1 font-medium">Classic Study Edition</p>
+      </div>
+      <nav class="flex flex-col gap-1 text-sm">
+        <button data-nav="home" onclick="showScreen('home')" class="text-left px-4 py-2.5 rounded-xl bg-indigo-600 text-white font-medium transition-colors">Главная</button>
+        <button data-nav="topic" onclick="showScreen('topic')" class="text-left px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-200 transition-colors">Тема</button>
+        <button data-nav="import" onclick="showScreen('import')" class="text-left px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-200 transition-colors">Добавить материал</button>
+        <button data-nav="generate" onclick="showScreen('generate')" class="text-left px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-200 transition-colors">Генерация фактов</button>
+        <button data-nav="training" onclick="showScreen('training'); showCardState('front')" class="text-left px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-200 transition-colors">Тренировка</button>
+        <button data-nav="errors" onclick="showScreen('errors')" class="text-left px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-200 transition-colors">Ошибки</button>
+        <button data-nav="stats" onclick="showScreen('stats')" class="text-left px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-200 transition-colors">Статистика</button>
+      </nav>
+      <div class="mt-auto pt-6 px-2 text-[10px] uppercase tracking-wider text-slate-400 font-semibold">
+        Design: Classic Study
+      </div>
+    </aside>
+
+    <main class="flex-1 p-10 overflow-auto bg-white">
+
+      <!-- ========== ГЛАВНАЯ ========== -->
+      <section id="home" data-screen class="max-w-5xl mx-auto">
+        <header class="flex items-center justify-between mb-10">
+          <div>
+            <h2 class="text-3xl font-semibold tracking-tight text-slate-900">Мои темы</h2>
+            <p class="text-slate-500 mt-1">Академическая база знаний для интеллектуальных игр</p>
+          </div>
+          <div class="flex gap-4">
+            <button class="px-5 py-2.5 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-shadow shadow-sm">+ Создать тему</button>
+            <button onclick="showScreen('training'); showCardState('front')" class="px-5 py-2.5 border border-indigo-200 text-indigo-700 bg-indigo-50 rounded-xl font-medium hover:bg-indigo-100 transition-colors">▶ Быстрая тренировка</button>
+          </div>
+        </header>
+
+        <div class="grid grid-cols-2 gap-8 mb-10">
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Повторить сегодня</h3>
+            <p class="text-4xl font-bold text-indigo-600 mt-3">24</p>
+            <p class="text-sm text-slate-600 mt-1 font-medium">карточки требуют внимания</p>
+            <button onclick="showScreen('training'); showCardState('front')" class="mt-6 inline-flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+              Начать сессию 
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Слабые темы</h3>
+            <ul class="mt-4 space-y-3 text-sm">
+              <li class="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span class="text-slate-700 font-medium">Католические святые</span>
+                <span class="text-indigo-600 font-bold">62% ошибок</span>
+              </li>
+              <li class="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span class="text-slate-700 font-medium">Пьесы Шекспира</span>
+                <span class="text-indigo-600 font-bold">41% ошибок</span>
+              </li>
+              <li class="flex justify-between items-center">
+                <span class="text-slate-700 font-medium">Античные философы</span>
+                <span class="text-indigo-600 font-bold">38% ошибок</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <table class="w-full text-left">
+            <thead class="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-widest text-slate-500">
+              <tr>
+                <th class="px-6 py-4 font-semibold">Тема</th>
+                <th class="px-6 py-4 font-semibold">Факты</th>
+                <th class="px-6 py-4 font-semibold">Карточки</th>
+                <th class="px-6 py-4 font-semibold">Статус</th>
+                <th class="px-6 py-4 font-semibold"></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50 cursor-pointer transition-colors" onclick="showScreen('topic')">
+                <td class="px-6 py-5">
+                  <div class="font-semibold text-slate-900">Культовые компьютерные игры 90-х</div>
+                  <div class="text-xs text-slate-400 mt-1 font-medium">#игры #90-е · Classic Study</div>
+                </td>
+                <td class="px-6 py-5 text-slate-600 font-medium">20</td>
+                <td class="px-6 py-5 text-slate-600 font-medium">20</td>
+                <td class="px-6 py-5"><span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-[10px] uppercase tracking-wider font-bold rounded-full border border-indigo-100">в процессе</span></td>
+                <td class="px-6 py-5 text-right text-indigo-600 font-semibold text-sm">Изучить →</td>
+              </tr>
+              <tr class="hover:bg-slate-50 cursor-pointer transition-colors">
+                <td class="px-6 py-5">
+                  <div class="font-semibold text-slate-900">Католические святые и как они умерли</div>
+                  <div class="text-xs text-slate-400 mt-1 font-medium">#религия #история · Classic Study</div>
+                </td>
+                <td class="px-6 py-5 text-slate-600 font-medium">34</td>
+                <td class="px-6 py-5 text-slate-600 font-medium">31</td>
+                <td class="px-6 py-5"><span class="px-3 py-1 bg-slate-100 text-slate-600 text-[10px] uppercase tracking-wider font-bold rounded-full border border-slate-200">слабая</span></td>
+                <td class="px-6 py-5 text-right text-indigo-600 font-semibold text-sm">Изучить →</td>
+              </tr>
+              <tr class="hover:bg-slate-50 cursor-pointer transition-colors">
+                <td class="px-6 py-5">
+                  <div class="font-semibold text-slate-900">Пьесы Шекспира</div>
+                  <div class="text-xs text-slate-400 mt-1 font-medium">#литература #театр · Classic Study</div>
+                </td>
+                <td class="px-6 py-5 text-slate-600 font-medium">18</td>
+                <td class="px-6 py-5 text-slate-600 font-medium">18</td>
+                <td class="px-6 py-5"><span class="px-3 py-1 bg-slate-50 text-slate-400 text-[10px] uppercase tracking-wider font-bold rounded-full border border-slate-200">новая</span></td>
+                <td class="px-6 py-5 text-right text-indigo-600 font-semibold text-sm">Изучить →</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========== ЭКРАН ТЕМЫ ========== -->
+      <section id="topic" data-screen class="hidden max-w-5xl mx-auto">
+        <nav class="text-sm font-medium text-slate-400 mb-6">
+          <button onclick="showScreen('home')" class="hover:text-indigo-600 flex items-center transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            Назад к списку тем
+          </button>
+        </nav>
+        <header class="flex items-start justify-between mb-10">
+          <div class="max-w-2xl">
+            <h2 class="text-3xl font-semibold tracking-tight text-slate-900">Культовые компьютерные игры 90-х</h2>
+            <p class="text-slate-500 mt-3 leading-relaxed">Doom, Diablo, Half-Life, Heroes III, Fallout — ключевые факты для вопросов про жанры, студии, механики и культурное влияние.</p>
+            <div class="flex gap-2 mt-5">
+              <span class="px-3 py-1 bg-slate-100 text-slate-600 text-[10px] uppercase tracking-wider font-bold rounded-md">#игры</span>
+              <span class="px-3 py-1 bg-slate-100 text-slate-600 text-[10px] uppercase tracking-wider font-bold rounded-md">#90-е</span>
+              <span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-[10px] uppercase tracking-wider font-bold rounded-md border border-indigo-100">Classic Study</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-3 shrink-0">
+            <button onclick="showScreen('import')" class="px-5 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">+ Добавить факт</button>
+            <button onclick="showScreen('generate')" class="px-5 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">✨ Сгенерировать</button>
+            <button onclick="showScreen('training'); showCardState('front')" class="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-sm hover:bg-indigo-700 transition-colors">▶ Начать тренировку</button>
+          </div>
+        </header>
+
+        <div class="grid grid-cols-3 gap-6 mb-10">
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm">
+            <div class="text-3xl font-bold text-slate-900">20</div>
+            <div class="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-1">фактов</div>
+          </div>
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm">
+            <div class="text-3xl font-bold text-slate-900">20</div>
+            <div class="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-1">карточек</div>
+          </div>
+          <div class="bg-indigo-50 rounded-2xl border border-indigo-100 p-6 text-center shadow-sm">
+            <div class="text-3xl font-bold text-indigo-600">70%</div>
+            <div class="text-[10px] uppercase tracking-widest text-indigo-400 font-bold mt-1">освоено</div>
+          </div>
+        </div>
+
+        <div class="flex gap-8 border-b border-slate-200 mb-6">
+          <button class="px-2 py-4 border-b-2 border-indigo-600 font-bold text-sm text-indigo-600 uppercase tracking-wider">Факты (20)</button>
+          <button class="px-2 py-4 text-slate-400 hover:text-slate-600 font-bold text-sm uppercase tracking-wider transition-colors">Карточки (20)</button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm divide-y divide-slate-100">
+          <div class="p-6 flex gap-6 hover:bg-slate-50 transition-colors">
+            <div class="flex-1">
+              <p class="font-semibold text-slate-900">Doom (1993) — id Software, популяризировал жанр FPS.</p>
+              <p class="text-sm text-slate-500 mt-2 leading-relaxed">Первая игра, распространявшаяся через shareware: бесплатный первый эпизод.</p>
+              <div class="flex items-center gap-3 mt-3">
+                <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400">важность: высокая</span>
+                <span class="text-[10px] uppercase tracking-wider font-bold text-indigo-500">✓ есть карточка</span>
+              </div>
+            </div>
+            <button class="text-xs font-bold text-indigo-600 uppercase tracking-wider hover:text-indigo-800 transition-colors self-start mt-1">Редактировать</button>
+          </div>
+          <div class="p-6 flex gap-6 hover:bg-slate-50 transition-colors">
+            <div class="flex-1">
+              <p class="font-semibold text-slate-900">Heroes of Might and Magic III (1999) — New World Computing.</p>
+              <p class="text-sm text-slate-500 mt-2 leading-relaxed">Продолжение серии стратегий; саундтрек Пола Ромеро стал культовым.</p>
+              <div class="flex items-center gap-3 mt-3">
+                <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400">важность: средняя</span>
+                <span class="text-[10px] uppercase tracking-wider font-bold text-indigo-500">✓ есть карточка</span>
+              </div>
+            </div>
+            <button class="text-xs font-bold text-indigo-600 uppercase tracking-wider hover:text-indigo-800 transition-colors self-start mt-1">Редактировать</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ДОБАВЛЕНИЕ МАТЕРИАЛА ========== -->
+      <section id="import" data-screen class="hidden max-w-2xl mx-auto">
+        <h2 class="text-3xl font-semibold tracking-tight text-slate-900 mb-2">Добавить материал</h2>
+        <p class="text-slate-500 mb-8">Система проанализирует текст и выделит ключевые факты для карточек.</p>
+
+        <form class="space-y-6">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Тема</label>
+            <select class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all font-medium">
+              <option>Культовые компьютерные игры 90-х</option>
+              <option>+ Создать новую тему…</option>
+              <option>Католические святые и как они умерли</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Текст / заметка / список</label>
+            <textarea rows="10" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all font-mono text-sm leading-relaxed" placeholder="Вставьте материал сюда…">Doom — 1993, id Software, FPS.
+Diablo — 1996, Blizzard, action RPG, Тристрад.
+Fallout — 1998, Interplay, постапокалипсис, SPECIAL.
+Half-Life — Valve, 1998, GoldSrc, Гордон Фримен.</textarea>
+          </div>
+          <button type="button" onclick="showScreen('generate')" class="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold uppercase tracking-widest text-sm shadow-sm hover:bg-indigo-700 transition-all">Извлечь факты</button>
+        </form>
+      </section>
+
+      <!-- ========== ГЕНЕРАЦИЯ / ПРЕДПРОСМОТР ФАКТОВ ========== -->
+      <section id="generate" data-screen class="hidden max-w-4xl mx-auto">
+        <h2 class="text-3xl font-semibold tracking-tight text-slate-900 mb-2">Подготовка фактов</h2>
+        <p class="text-slate-500 mb-8">Проверьте извлечённые данные перед сохранением в базу.</p>
+
+        <div class="flex gap-4 mb-8">
+          <input type="text" value="Культовые компьютерные игры 90-х" class="flex-1 border border-slate-200 rounded-xl px-4 py-3 bg-slate-50 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all font-medium">
+          <button class="px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-slate-800 transition-colors">Обновить</button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm divide-y divide-slate-100 mb-8">
+          <label class="flex gap-4 p-6 cursor-pointer hover:bg-slate-50 transition-colors group">
+            <input type="checkbox" checked class="w-5 h-5 mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+            <div>
+              <p class="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors">Quake (1996) использовал полигональную 3D-графику вместо спрайтов Doom.</p>
+              <p class="text-sm text-slate-500 mt-1">id Software; важный шаг в эволюции шутеров.</p>
+            </div>
+          </label>
+          <label class="flex gap-4 p-6 cursor-pointer hover:bg-slate-50 transition-colors group">
+            <input type="checkbox" checked class="w-5 h-5 mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+            <div>
+              <p class="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors">StarCraft (1998) — Blizzard, три расы: терраны, протоссы, зерги.</p>
+              <p class="text-sm text-slate-500 mt-1">Киберспорт в Корее начался с этой игры.</p>
+            </div>
+          </label>
+        </div>
+
+        <div class="flex gap-4">
+          <button class="px-8 py-3.5 bg-indigo-600 text-white rounded-xl font-bold uppercase tracking-widest text-xs shadow-sm hover:bg-indigo-700 transition-all">Сохранить факты</button>
+          <button onclick="showScreen('topic')" class="px-8 py-3.5 border border-slate-200 text-slate-400 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-slate-50 transition-all">Отмена</button>
+        </div>
+      </section>
+
+      <!-- ========== ТРЕНИРОВКА (КАРТОЧКА) ========== -->
+      <section id="training" data-screen class="hidden max-w-2xl mx-auto">
+        <div class="flex items-center justify-between mb-8 text-[10px] uppercase tracking-widest font-bold text-slate-400">
+          <span>Тема: <strong class="text-slate-900">Игры 90-х</strong></span>
+          <span>Карточка 7 / 12</span>
+          <span class="text-indigo-500">Classic Study</span>
+        </div>
+
+        <!-- Состояние 1: только вопрос -->
+        <div id="card-front" class="bg-white rounded-[2rem] border border-slate-200 shadow-xl p-16 min-h-[400px] flex flex-col items-center justify-center text-center transition-all hover:shadow-2xl">
+          <span class="text-[10px] uppercase tracking-[0.2em] font-black text-slate-300 mb-10">Вопрос</span>
+          <p class="text-2xl font-medium leading-relaxed text-slate-800">
+            Какая игра 1993 года от id Software популяризировала жанр FPS и распространялась по модели shareware?
+          </p>
+          <button onclick="showCardState('back')" class="mt-12 px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold uppercase tracking-widest text-sm hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200">
+            Показать ответ
+          </button>
+        </div>
+
+        <!-- Состояние 2: ответ + пояснение + кнопки -->
+        <div id="card-back" class="hidden bg-white rounded-[2rem] border border-indigo-100 shadow-xl p-16 min-h-[400px] transition-all">
+          <div class="mb-8 pb-8 border-b border-slate-100">
+            <span class="text-[10px] uppercase tracking-[0.2em] font-black text-slate-300">Вопрос</span>
+            <p class="text-sm text-slate-500 mt-2 italic leading-relaxed">Какая игра 1993 года от id Software популяризировала жанр FPS…?</p>
+          </div>
+          <div class="mb-6">
+            <span class="text-[10px] uppercase tracking-[0.2em] font-black text-indigo-500">Ответ</span>
+            <p class="text-4xl font-bold text-slate-900 mt-2 tracking-tight">Doom</p>
+          </div>
+          <div class="mb-12">
+            <span class="text-[10px] uppercase tracking-[0.2em] font-black text-slate-300">Пояснение</span>
+            <p class="text-slate-600 mt-3 leading-relaxed text-sm">
+              Shareware-модель: первый эпизод бесплатно — частый контекст в вопросах про дистрибуцию 90-х. Связь: id Software, Wolfenstein 3D → Doom → Quake.
+            </p>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <button onclick="showCardState('front')" class="py-4 bg-slate-50 text-slate-900 border border-slate-100 rounded-2xl font-bold uppercase tracking-widest text-[10px] hover:bg-indigo-600 hover:text-white transition-all">✓ Знала</button>
+            <button onclick="showCardState('front')" class="py-4 bg-slate-50 text-slate-900 border border-slate-100 rounded-2xl font-bold uppercase tracking-widest text-[10px] hover:bg-indigo-600 hover:text-white transition-all">✗ Не знала</button>
+            <button onclick="showCardState('front')" class="py-4 bg-slate-50 text-slate-900 border border-slate-100 rounded-2xl font-bold uppercase tracking-widest text-[10px] hover:bg-indigo-600 hover:text-white transition-all">↻ Повторить</button>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-8 mt-10">
+          <button class="text-[10px] uppercase tracking-widest font-black text-slate-400 hover:text-slate-900 transition-colors">Пропустить</button>
+          <button onclick="showScreen('home')" class="text-[10px] uppercase tracking-widest font-black text-slate-400 hover:text-slate-900 transition-colors">Завершить</button>
+        </div>
+      </section>
+
+      <!-- ========== ОШИБКИ ========== -->
+      <section id="errors" data-screen class="hidden max-w-5xl mx-auto">
+        <header class="flex items-center justify-between mb-10">
+          <div>
+            <h2 class="text-3xl font-semibold tracking-tight text-slate-900">Журнал ошибок</h2>
+            <p class="text-slate-500 mt-1">Анализ слабых мест для точечного повторения</p>
+          </div>
+          <button class="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-sm">+ Записать</button>
+        </header>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 border-b border-slate-200 text-[10px] uppercase tracking-widest font-black text-slate-400">
+              <tr>
+                <th class="px-6 py-4">Контекст ошибки</th>
+                <th class="px-6 py-4">Верный ответ</th>
+                <th class="px-6 py-4">Тема</th>
+                <th class="px-6 py-4">Дата</th>
+                <th class="px-6 py-4"></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50 transition-colors">
+                <td class="px-6 py-5 font-medium text-slate-900">Святая Агата — способ мученичества</td>
+                <td class="px-6 py-5 text-slate-600 font-semibold">Грудь отсечена</td>
+                <td class="px-6 py-5 text-indigo-600 font-bold text-xs uppercase tracking-wider">Святые</td>
+                <td class="px-6 py-5 text-slate-400 font-medium">18.05.26</td>
+                <td class="px-6 py-5 text-right">
+                  <button class="text-xs font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-800 transition-colors">Создать карту</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========== СТАТИСТИКА ========== -->
+      <section id="stats" data-screen class="hidden max-w-5xl mx-auto">
+        <h2 class="text-3xl font-semibold tracking-tight text-slate-900 mb-10">Аналитика прогресса</h2>
+        
+        <div class="grid grid-cols-4 gap-6 mb-12">
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <div class="text-3xl font-bold text-slate-900">4</div>
+            <div class="text-[10px] uppercase tracking-widest font-black text-slate-400 mt-1">темы</div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <div class="text-3xl font-bold text-slate-900">84</div>
+            <div class="text-[10px] uppercase tracking-widest font-black text-slate-400 mt-1">факта</div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <div class="text-3xl font-bold text-slate-900">79</div>
+            <div class="text-[10px] uppercase tracking-widest font-black text-slate-400 mt-1">карт</div>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 shadow-sm">
+            <div class="text-3xl font-bold text-indigo-600">24</div>
+            <div class="text-[10px] uppercase tracking-widest font-black text-indigo-400 mt-1">повторить</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Сложные вопросы</h3>
+            <div class="bg-white border border-slate-200 rounded-2xl divide-y divide-slate-100 shadow-sm overflow-hidden text-sm">
+              <div class="p-5 flex justify-between items-center hover:bg-slate-50 transition-colors">
+                <span class="font-medium text-slate-700">Святой на решётке?</span>
+                <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">3 ошибки</span>
+              </div>
+              <div class="p-5 flex justify-between items-center hover:bg-slate-50 transition-colors">
+                <span class="font-medium text-slate-700">Студия Diablo (1996)?</span>
+                <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">2 ошибки</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Доступные стили</h3>
+            <div class="grid grid-cols-1 gap-4">
+              <div class="border-2 border-indigo-600 rounded-2xl p-5 bg-white shadow-md">
+                <div class="font-bold text-slate-900 uppercase tracking-widest text-xs">Classic Study</div>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Минималистичный академический дизайн для максимальной концентрации.</p>
+              </div>
+              <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50 opacity-60 grayscale">
+                <div class="font-bold text-slate-400 uppercase tracking-widest text-xs">Old Paper</div>
+                <p class="text-[10px] text-slate-400 mt-1 italic">Доступно в полной версии</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>
