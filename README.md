@@ -12,21 +12,19 @@
 
 ## Как запустить
 
-1. Склонируйте репозиторий.
-2. Откройте `index.html` в браузере.
-
-Для локального просмотра:
-
 ```bash
-python3 -m http.server 8765
+npm install
+npm run dev -- --host 127.0.0.1 --port 8765
 ```
 
 Затем откройте http://localhost:8765/
 
 ## Технологии
 
-- HTML5 / JavaScript
+- React
+- Vite
 - Tailwind CSS (CDN)
+- localStorage
 
 ## Основные возможности (MVP)
 
@@ -38,7 +36,12 @@ python3 -m http.server 8765
 
 ## Структура
 
-- `index.html` — прототип приложения
+- `index.html` — Vite entrypoint
+- `src/App.jsx` — верхний state и навигация
+- `src/screens/` — экраны приложения
+- `src/components/` — общие компоненты
+- `src/data/seed.js` — стартовые данные
+- `src/lib/storage.js` — localStorage
 - `prd.md` — product requirements document
 
 ---
